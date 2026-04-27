@@ -592,16 +592,25 @@ document.getElementById('submitBtn').addEventListener('click', function() {
 
 // QR code
 window.addEventListener('load', function() {
-  try {
-    new QRCode(document.getElementById('qrcode'), {
-      text: 'https://www.dentalluz.pe',
-      width: 160,
-      height: 160,
-      colorDark: '#1A5C4A',
-      colorLight: '#FFFFFF',
-      correctLevel: QRCode.CorrectLevel.H
-    });
-  } catch(e) { console.log('QR error:', e); }
+  const qrContainer = document.getElementById('qrcode');
+  
+  if (qrContainer) {
+    // 1. Limpiamos el contenedor para evitar el "doble QR"
+    qrContainer.innerHTML = ""; 
+    
+    try {
+      new QRCode(qrContainer, {
+        text: 'https://www.dentalluz.pe',
+        width: 160, // Tamaño interno
+        height: 160,
+        colorDark: '#1A5C4A',
+        colorLight: '#FFFFFF',
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    } catch(e) { 
+      console.log('QR error:', e); 
+    }
+  }
 });
 </script>
 </body>
