@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DentalLuz</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#FAF8F3;--mint:#D4EDE4;--deep-teal:#1A5C4A;--mid-teal:#2E8B6B;
+  --light-teal:#5BB89A;--gold:#C8A96E;--text-dark:#1C1C1C;
+  --text-mid:#4A4A4A;--text-light:#7A7A7A;--white:#FFFFFF;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.1rem 3rem;background:rgba(250,248,243,0.93);backdrop-filter:blur(12px);border-bottom:1px solid rgba(212,237,228,0.6)}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:600;color:var(--deep-teal);letter-spacing:.02em}
+.logo span{color:var(--gold)}
+nav ul{list-style:none;display:flex;gap:2.2rem}
+nav ul a{text-decoration:none;font-size:.82rem;font-weight:500;color:var(--text-mid);letter-spacing:.08em;text-transform:uppercase;transition:color .2s}
+nav ul a:hover{color:var(--deep-teal)}
+.nav-cta{background:var(--deep-teal);color:var(--white)!important;padding:.55rem 1.3rem;border-radius:2rem;transition:background .2s!important}
+.nav-cta:hover{background:var(--mid-teal)!important}
+
+/* SOCIAL BAR TOP */
+.social-bar{background:var(--deep-teal);padding:.5rem 3rem;display:flex;justify-content:flex-end;align-items:center;gap:1rem}
+.social-bar a{color:rgba(255,255,255,.7);text-decoration:none;display:flex;align-items:center;gap:.35rem;font-size:.75rem;transition:color .2s}
+.social-bar a:hover{color:var(--gold)}
+.social-bar svg{width:14px;height:14px;fill:currentColor}
+.social-bar .sep{color:rgba(255,255,255,.25);font-size:.6rem}
+
+/* HERO */
+#hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:7rem 3rem 4rem;gap:3rem;background:var(--cream)}
+.hero-text{max-width:540px}
+.hero-eyebrow{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1.2rem;display:flex;align-items:center;gap:.7rem}
+.hero-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--gold)}
+h1{font-family:'Cormorant Garamond',serif;font-size:4rem;font-weight:300;line-height:1.1;color:var(--deep-teal);margin-bottom:1.4rem}
+h1 em{font-style:italic;color:var(--gold)}
+.hero-desc{font-size:1rem;line-height:1.7;color:var(--text-mid);margin-bottom:2.4rem;max-width:420px}
+.btn-group{display:flex;gap:1rem;align-items:center}
+.btn-primary{background:var(--deep-teal);color:var(--white);padding:.9rem 2rem;border-radius:3rem;text-decoration:none;font-size:.9rem;font-weight:500;letter-spacing:.04em;transition:background .2s,transform .15s}
+.btn-primary:hover{background:var(--mid-teal);transform:translateY(-1px)}
+.btn-ghost{color:var(--deep-teal);text-decoration:none;font-size:.9rem;font-weight:500;display:flex;align-items:center;gap:.4rem;transition:gap .2s}
+.btn-ghost:hover{gap:.7rem}
+
+/* HERO IMAGE MOSAIC */
+.hero-mosaic{position:relative;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:220px 180px;gap:10px;width:100%}
+.mosaic-img{border-radius:1rem;overflow:hidden;background:#ccc}
+.mosaic-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.mosaic-img:hover img{transform:scale(1.04)}
+.mosaic-img.tall{grid-row:1/3;border-radius:1.3rem}
+.hero-badge{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);background:var(--deep-teal);color:var(--white);border-radius:3rem;padding:.7rem 1.8rem;white-space:nowrap;font-size:.82rem;font-weight:500;box-shadow:0 10px 30px rgba(26,92,74,.3);display:flex;align-items:center;gap:.6rem}
+.badge-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0}
+
+/* STATS */
+.stats-bar{background:var(--deep-teal);color:var(--white);padding:2rem 3rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;text-align:center}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;color:var(--gold);line-height:1}
+.stat-label{font-size:.8rem;opacity:.75;margin-top:.3rem}
+
+/* SERVICIOS */
+#servicios{padding:6rem 3rem;background:var(--white)}
+.section-header{text-align:center;margin-bottom:4rem}
+.section-eyebrow{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:.8rem;display:flex;align-items:center;justify-content:center;gap:.7rem}
+.section-eyebrow::before,.section-eyebrow::after{content:'';display:block;width:28px;height:1px;background:var(--gold)}
+h2{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;color:var(--deep-teal)}
+
+/* SERVICES WITH IMAGES */
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.service-card{border:1px solid rgba(212,237,228,.8);border-radius:1.2rem;overflow:hidden;transition:all .25s;cursor:default}
+.service-card:hover{border-color:var(--light-teal);transform:translateY(-4px);box-shadow:0 20px 50px rgba(26,92,74,.08)}
+.service-img{height:160px;overflow:hidden;background:#e8f4f0;position:relative}
+.service-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.service-card:hover .service-img img{transform:scale(1.06)}
+.service-img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+.service-body{padding:1.3rem}
+.service-icon-sm{width:36px;height:36px;background:var(--mint);border-radius:.5rem;display:flex;align-items:center;justify-content:center;margin-bottom:.8rem}
+.service-icon-sm svg{width:18px;height:18px;color:var(--deep-teal)}
+.service-card h4{font-size:1rem;font-weight:500;color:var(--text-dark);margin-bottom:.5rem}
+.service-card p{font-size:.83rem;line-height:1.6;color:var(--text-light)}
+
+/* GALLERY STRIP */
+.gallery-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0;overflow:hidden}
+.gallery-item{height:240px;overflow:hidden;position:relative}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.gallery-item:hover img{transform:scale(1.08)}
+.gallery-item .gallery-overlay{position:absolute;inset:0;background:rgba(26,92,74,.0);transition:background .3s;display:flex;align-items:flex-end;padding:1rem}
+.gallery-item:hover .gallery-overlay{background:rgba(26,92,74,.45)}
+.gallery-label{font-size:.78rem;color:var(--white);font-weight:500;opacity:0;transition:opacity .3s;letter-spacing:.06em;text-transform:uppercase}
+.gallery-item:hover .gallery-label{opacity:1}
+
+/* EQUIPO */
+#equipo{padding:6rem 3rem;background:var(--cream)}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:1rem}
+.team-card{background:var(--white);border-radius:1.2rem;overflow:hidden;border:1px solid rgba(212,237,228,.5);transition:transform .25s,box-shadow .25s}
+.team-card:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(26,92,74,.08)}
+.team-photo{height:220px;overflow:hidden;background:var(--mint)}
+.team-photo img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .4s}
+.team-card:hover .team-photo img{transform:scale(1.05)}
+.team-photo-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:4rem;font-weight:300;color:var(--deep-teal)}
+.team-info{padding:1.5rem}
+.team-info h4{font-size:1.05rem;font-weight:500;color:var(--text-dark);margin-bottom:.3rem}
+.team-info .specialty{font-size:.82rem;color:var(--mid-teal);font-weight:500;margin-bottom:.6rem}
+.team-info p{font-size:.82rem;color:var(--text-light);line-height:1.55}
+
+/* TESTIMONIOS */
+#testimonios{padding:6rem 3rem;background:var(--deep-teal);color:var(--white)}
+#testimonios .section-eyebrow{color:var(--gold)}
+#testimonios .section-eyebrow::before,#testimonios .section-eyebrow::after{background:var(--gold)}
+#testimonios h2{color:var(--white)}
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
+.testimonial{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:1.2rem;padding:2rem}
+.testimonial .quote-mark{font-family:'Cormorant Garamond',serif;font-size:4rem;color:var(--gold);line-height:.8;margin-bottom:1rem}
+.testimonial p{font-size:.9rem;line-height:1.7;opacity:.85;margin-bottom:1.5rem}
+.testimonial-author{display:flex;align-items:center;gap:.8rem}
+.author-avatar{width:40px;height:40px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.85rem;color:var(--deep-teal);flex-shrink:0}
+.author-name{font-size:.88rem;font-weight:500}
+.author-since{font-size:.75rem;opacity:.55}
+
+/* REDES + QR */
+#redes{padding:5rem 3rem;background:var(--white)}
+.redes-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.redes-left h2{text-align:left;margin-bottom:1rem}
+.redes-left p{font-size:.95rem;color:var(--text-mid);line-height:1.7;margin-bottom:2rem}
+.social-cards{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.social-card{border:1px solid rgba(212,237,228,.8);border-radius:1rem;padding:1.2rem 1.4rem;display:flex;align-items:center;gap:.9rem;text-decoration:none;color:var(--text-dark);transition:all .22s}
+.social-card:hover{transform:translateY(-2px);border-color:var(--light-teal);box-shadow:0 10px 30px rgba(26,92,74,.08)}
+.sc-icon{width:44px;height:44px;border-radius:.65rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sc-icon svg{width:22px;height:22px}
+.sc-name{font-size:.88rem;font-weight:500;color:var(--text-dark)}
+.sc-handle{font-size:.75rem;color:var(--text-light)}
+.sc-arrow{margin-left:auto;font-size:1rem;color:var(--text-light);transition:transform .2s}
+.social-card:hover .sc-arrow{transform:translateX(3px)}
+
+.qr-block{display:flex;flex-direction:column;align-items:center;gap:1.2rem;background:var(--cream);border-radius:1.5rem;padding:3rem;border:1px solid rgba(212,237,228,.6)}
+.qr-block h3{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:400;color:var(--deep-teal);text-align:center}
+#qrcode{background:var(--white);padding:12px;border-radius:.75rem;border:1px solid rgba(212,237,228,.9)}
+#qrcode canvas,#qrcode img{display:block!important}
+.qr-url{font-size:.78rem;color:var(--text-light);letter-spacing:.04em;text-align:center}
+.qr-label{font-size:.82rem;color:var(--text-mid);text-align:center;max-width:200px;line-height:1.5}
+
+/* CTA FORM */
+#cita{padding:6rem 3rem;background:var(--cream);display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.cta-text h2{text-align:left;margin-bottom:1rem}
+.cta-text .section-eyebrow{justify-content:flex-start}
+.cta-text .section-eyebrow::after{display:none}
+.cta-text p{font-size:.95rem;color:var(--text-mid);line-height:1.7;margin-bottom:2rem}
+.contact-info{display:flex;flex-direction:column;gap:1rem}
+.contact-row{display:flex;align-items:center;gap:.8rem;font-size:.88rem;color:var(--text-mid)}
+.contact-icon{width:36px;height:36px;background:var(--mint);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cta-form{background:var(--white);border-radius:1.5rem;padding:2.5rem;border:1px solid rgba(212,237,228,.5)}
+.cta-form h3{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:400;color:var(--deep-teal);margin-bottom:1.5rem}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:.78rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--text-mid);margin-bottom:.4rem}
+.form-group input,.form-group select{width:100%;padding:.75rem 1rem;background:var(--cream);border:1px solid rgba(212,237,228,.8);border-radius:.6rem;font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--text-dark);outline:none;transition:border-color .2s}
+.form-group input:focus,.form-group select:focus{border-color:var(--mid-teal)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.form-submit{width:100%;background:var(--deep-teal);color:var(--white);border:none;padding:.95rem;border-radius:3rem;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;cursor:pointer;letter-spacing:.04em;transition:background .2s,transform .15s;margin-top:.5rem}
+.form-submit:hover{background:var(--mid-teal);transform:translateY(-1px)}
+
+/* FOOTER */
+footer{background:#0F3A2D;color:rgba(255,255,255,.7);padding:3rem;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem}
+.footer-brand .logo{color:var(--mint);margin-bottom:1rem;display:block}
+.footer-brand p{font-size:.84rem;line-height:1.65;max-width:240px;margin-bottom:1.5rem}
+.footer-socials{display:flex;gap:.7rem}
+.footer-social{width:34px;height:34px;border-radius:.5rem;border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;text-decoration:none;color:rgba(255,255,255,.6);transition:all .2s}
+.footer-social:hover{background:var(--gold);border-color:var(--gold);color:#0F3A2D}
+.footer-social svg{width:15px;height:15px;fill:currentColor}
+footer h5{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+footer ul{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+footer ul li a{text-decoration:none;font-size:.85rem;color:rgba(255,255,255,.6);transition:color .2s}
+footer ul li a:hover{color:var(--white)}
+.footer-bottom{background:#0A2A20;padding:1.2rem 3rem;text-align:center;font-size:.78rem;color:rgba(255,255,255,.35);display:flex;justify-content:space-between;align-items:center}
+.footer-bottom-socials{display:flex;gap:1rem}
+.footer-bottom-socials a{color:rgba(255,255,255,.35);text-decoration:none;font-size:.75rem;transition:color .2s}
+.footer-bottom-socials a:hover{color:var(--gold)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.hero-text{animation:fadeUp .7s ease both}
+.hero-mosaic{animation:fadeUp .7s .15s ease both}
+</style>
+</head>
+<body>
+
+<!-- SOCIAL TOP BAR -->
+<div class="social-bar">
+  <a href="https://facebook.com" target="_blank">
+    <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+    Facebook
+  </a>
+  <span class="sep">|</span>
+  <a href="https://instagram.com" target="_blank">
+    <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="currentColor" style="stroke-width:1.5"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="currentColor" style="stroke-width:2"/></svg>
+    Instagram
+  </a>
+  <span class="sep">|</span>
+  <a href="https://tiktok.com" target="_blank">
+    <svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+    TikTok
+  </a>
+  <span class="sep">|</span>
+  <a href="https://wa.me/51987654321" target="_blank">
+    <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    WhatsApp
+  </a>
+</div>
+
+<nav>
+  <div class="logo">Dental<span>Luz</span></div>
+  <ul>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#equipo">Equipo</a></li>
+    <li><a href="#redes">Redes</a></li>
+    <li><a href="#testimonios">Testimonios</a></li>
+    <li><a href="#cita" class="nav-cta">Reservar cita</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Odontología de excelencia</div>
+    <h1>Tu sonrisa<br>es nuestra <em>pasión</em></h1>
+    <p class="hero-desc">Cuidado dental personalizado con tecnología de vanguardia y un equipo de especialistas comprometidos con tu bienestar.</p>
+    <div class="btn-group">
+      <a href="#cita" class="btn-primary">Reservar cita</a>
+      <a href="#servicios" class="btn-ghost">Ver servicios →</a>
+    </div>
+  </div>
+  <div class="hero-mosaic">
+    <div class="mosaic-img tall">
+      <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=400&h=500&fit=crop" alt="Clínica dental moderna" loading="lazy">
+    </div>
+    <div class="mosaic-img">
+      <img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=300&h=200&fit=crop" alt="Sonrisa perfecta" loading="lazy">
+    </div>
+    <div class="mosaic-img">
+      <img src="https://images.unsplash.com/photo-1588776814546-1ffedbe47f08?w=300&h=170&fit=crop" alt="Tratamiento dental" loading="lazy">
+    </div>
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Primera consulta gratis · Lima
+    </div>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div><div class="stat-num">12,000+</div><div class="stat-label">Pacientes atendidos</div></div>
+  <div><div class="stat-num">98%</div><div class="stat-label">Satisfacción</div></div>
+  <div><div class="stat-num">8</div><div class="stat-label">Especialistas</div></div>
+  <div><div class="stat-num">15+</div><div class="stat-label">Años de experiencia</div></div>
+</div>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="section-header">
+    <div class="section-eyebrow">Lo que hacemos</div>
+    <h2>Nuestros servicios</h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-img">
+        <img src="https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=400&h=180&fit=crop" alt="Limpieza dental" loading="lazy">
+      </div>
+      <div class="service-body">
+        <h4>Limpieza y prevención</h4>
+        <p>Higiene dental profesional, profilaxis y sellantes para mantener tu salud bucal óptima.</p>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-img">
+        <img src="https://images.unsplash.com/photo-1581585099525-42cb8e044f26?w=400&h=180&fit=crop" alt="Blanqueamiento dental" loading="lazy">
+      </div>
+      <div class="service-body">
+        <h4>Blanqueamiento dental</h4>
+        <p>Tratamientos en clínica y en casa para una sonrisa radiante y natural.</p>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-img">
+        <img src="https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=400&h=180&fit=crop" alt="Ortodoncia" loading="lazy">
+      </div>
+      <div class="service-body">
+        <h4>Ortodoncia</h4>
+        <p>Brackets y alineadores transparentes para corregir la posición de tus dientes.</p>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-img">
+        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=180&fit=crop" alt="Implantes dentales" loading="lazy">
+      </div>
+      <div class="service-body">
+        <h4>Implantes dentales</h4>
+        <p>Soluciones permanentes de alta calidad para reemplazar dientes perdidos.</p>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-img">
+        <img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=400&h=180&fit=crop" alt="Estética dental" loading="lazy">
+      </div>
+      <div class="service-body">
+        <h4>Estética dental</h4>
+        <p>Carillas, coronas y diseño de sonrisa para transformar tu imagen.</p>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-img">
+        <img src="https://images.unsplash.com/photo-1588776814546-1ffedbe47f08?w=400&h=180&fit=crop" alt="Endodoncia" loading="lazy">
+      </div>
+      <div class="service-body">
+        <h4>Endodoncia</h4>
+        <p>Tratamientos de conducto modernos con mínimo dolor para salvar tus dientes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERÍA -->
+<div class="gallery-strip">
+  <div class="gallery-item">
+    <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=400&h=280&fit=crop" alt="Clínica" loading="lazy">
+    <div class="gallery-overlay"><span class="gallery-label">Nuestras instalaciones</span></div>
+  </div>
+  <div class="gallery-item">
+    <img src="https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=400&h=280&fit=crop" alt="Tratamiento" loading="lazy">
+    <div class="gallery-overlay"><span class="gallery-label">Atención personalizada</span></div>
+  </div>
+  <div class="gallery-item">
+    <img src="https://images.unsplash.com/photo-1581585099525-42cb8e044f26?w=400&h=280&fit=crop" alt="Sonrisa" loading="lazy">
+    <div class="gallery-overlay"><span class="gallery-label">Resultados reales</span></div>
+  </div>
+  <div class="gallery-item">
+    <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=280&fit=crop" alt="Equipos" loading="lazy">
+    <div class="gallery-overlay"><span class="gallery-label">Tecnología avanzada</span></div>
+  </div>
+</div>
+
+<!-- EQUIPO -->
+<section id="equipo">
+  <div class="section-header">
+    <div class="section-eyebrow">Profesionales</div>
+    <h2>Nuestro equipo</h2>
+  </div>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-photo">
+        <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&h=250&fit=crop&face" alt="Dra. Mariana Torres" loading="lazy">
+      </div>
+      <div class="team-info">
+        <h4>Dra. Mariana Torres</h4>
+        <div class="specialty">Directora · Estética Dental</div>
+        <p>Especialista en diseño de sonrisa y rehabilitación oral con más de 12 años de experiencia clínica.</p>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-photo">
+        <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&h=250&fit=crop&face" alt="Dr. Rodrigo Méndez" loading="lazy">
+      </div>
+      <div class="team-info">
+        <h4>Dr. Rodrigo Méndez</h4>
+        <div class="specialty">Implantología</div>
+        <p>Experto en implantes osteointegrados y cirugía oral con formación en España y México.</p>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-photo">
+        <img src="https://images.unsplash.com/photo-1638202993928-7267aad84c31?w=400&h=250&fit=crop&face" alt="Dra. Camila Rojas" loading="lazy">
+      </div>
+      <div class="team-info">
+        <h4>Dra. Camila Rojas</h4>
+        <div class="specialty">Ortodoncia</div>
+        <p>Especialista en ortodoncia invisible. Miembro de la Sociedad Peruana de Ortodoncia.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section id="testimonios">
+  <div class="section-header">
+    <div class="section-eyebrow">Lo que dicen nuestros pacientes</div>
+    <h2>Testimonios</h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial">
+      <div class="quote-mark">"</div>
+      <p>Después de años con miedo al dentista, encontré en DentalLuz un lugar donde me siento tranquila. El resultado de mi blanqueamiento fue increíble.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">LP</div>
+        <div><div class="author-name">Laura Pérez</div><div class="author-since">Paciente desde 2021</div></div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <div class="quote-mark">"</div>
+      <p>Me realizaron dos implantes y la experiencia fue mucho mejor de lo esperado. El equipo es muy profesional y siempre te explican cada paso.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">JM</div>
+        <div><div class="author-name">Jorge Medina</div><div class="author-since">Paciente desde 2020</div></div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <div class="quote-mark">"</div>
+      <p>Mi hija lleva ortodoncia invisible y los cambios en 6 meses han sido notables. La Dra. Camila es excelente y muy paciente.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">SV</div>
+        <div><div class="author-name">Sandra Vargas</div><div class="author-since">Paciente desde 2022</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REDES SOCIALES + QR -->
+<section id="redes">
+  <div class="section-header">
+    <div class="section-eyebrow">Síguenos</div>
+    <h2>Redes sociales</h2>
+  </div>
+  <div class="redes-inner">
+    <div class="redes-left">
+      <p>Síguenos en nuestras redes sociales para conocer tips de salud dental, casos de éxito, promociones y las últimas novedades de DentalLuz.</p>
+      <div class="social-cards">
+        <a href="https://instagram.com/dentalluz" target="_blank" class="social-card">
+          <div class="sc-icon" style="background:#fce4ec">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#c2185b" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5"/></svg>
+          </div>
+          <div><div class="sc-name">Instagram</div><div class="sc-handle">@dentalluz.pe</div></div>
+          <span class="sc-arrow">→</span>
+        </a>
+        <a href="https://facebook.com/dentalluz" target="_blank" class="social-card">
+          <div class="sc-icon" style="background:#e3f2fd">
+            <svg viewBox="0 0 24 24" fill="#1565c0" width="22" height="22"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </div>
+          <div><div class="sc-name">Facebook</div><div class="sc-handle">DentalLuz Lima</div></div>
+          <span class="sc-arrow">→</span>
+        </a>
+        <a href="https://tiktok.com/@dentalluz" target="_blank" class="social-card">
+          <div class="sc-icon" style="background:#f3e5f5">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#7b1fa2" stroke-width="2" width="22" height="22"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+          </div>
+          <div><div class="sc-name">TikTok</div><div class="sc-handle">@dentalluz.pe</div></div>
+          <span class="sc-arrow">→</span>
+        </a>
+        <a href="https://wa.me/51987654321" target="_blank" class="social-card">
+          <div class="sc-icon" style="background:#e8f5e9">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2" width="22" height="22"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </div>
+          <div><div class="sc-name">WhatsApp</div><div class="sc-handle">+51 987 654 321</div></div>
+          <span class="sc-arrow">→</span>
+        </a>
+        <a href="https://youtube.com/@dentalluz" target="_blank" class="social-card">
+          <div class="sc-icon" style="background:#ffebee">
+            <svg viewBox="0 0 24 24" fill="#c62828" width="22" height="22"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.4a2.78 2.78 0 0 0 1.95-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/></svg>
+          </div>
+          <div><div class="sc-name">YouTube</div><div class="sc-handle">DentalLuz Oficial</div></div>
+          <span class="sc-arrow">→</span>
+        </a>
+        <a href="https://linkedin.com/company/dentalluz" target="_blank" class="social-card">
+          <div class="sc-icon" style="background:#e1f0fa">
+            <svg viewBox="0 0 24 24" fill="#0277bd" width="22" height="22"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </div>
+          <div><div class="sc-name">LinkedIn</div><div class="sc-handle">DentalLuz S.A.C.</div></div>
+          <span class="sc-arrow">→</span>
+        </a>
+      </div>
+    </div>
+    <div class="qr-block">
+      <h3>Escanea y visítanos</h3>
+      <div id="qrcode"></div>
+      <div class="qr-label">Escanea con la cámara de tu celular para abrir nuestra página web</div>
+      <div class="qr-url">www.dentalluz.pe</div>
+    </div>
+  </div>
+</section>
+
+<!-- CITA -->
+<section id="cita">
+  <div class="cta-text">
+    <div class="section-eyebrow">Escríbenos</div>
+    <h2>Agenda tu cita</h2>
+    <p>Estamos listos para atenderte. Primera consulta completamente gratuita para nuevos pacientes.</p>
+    <div class="contact-info">
+      <div class="contact-row">
+        <div class="contact-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--deep-teal)" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.15 3.18 2 2 0 0 1 3.12 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16z"/></svg></div>
+        <span>+51 987 654 321</span>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--deep-teal)" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <span>contacto@dentalluz.pe</span>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--deep-teal)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <span>Av. Salaverry 2345, San Isidro, Lima</span>
+      </div>
+    </div>
+  </div>
+  <div class="cta-form">
+    <h3>Reserva tu cita</h3>
+    <div class="form-row">
+      <div class="form-group"><label>Nombre</label><input type="text" placeholder="Tu nombre"></div>
+      <div class="form-group"><label>Teléfono</label><input type="tel" placeholder="+51 ···"></div>
+    </div>
+    <div class="form-group"><label>Servicio</label>
+      <select>
+        <option>Selecciona un servicio</option>
+        <option>Limpieza y prevención</option>
+        <option>Blanqueamiento</option>
+        <option>Ortodoncia</option>
+        <option>Implantes</option>
+        <option>Estética dental</option>
+        <option>Endodoncia</option>
+        <option>Primera consulta (gratis)</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Fecha</label><input type="date"></div>
+      <div class="form-group"><label>Horario</label>
+        <select>
+          <option>Mañana (8–12h)</option>
+          <option>Tarde (12–17h)</option>
+          <option>Tarde-noche (17–20h)</option>
+        </select>
+      </div>
+    </div>
+    <button class="form-submit" id="submitBtn">Solicitar cita</button>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">
+    <span class="logo">Dental<span style="color:var(--gold)">Luz</span></span>
+    <p>Más de 15 años brindando atención dental de calidad en Lima. Tu salud bucal es nuestra prioridad.</p>
+    <div class="footer-socials">
+      <a href="https://instagram.com" target="_blank" class="footer-social"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.5"/></svg></a>
+      <a href="https://facebook.com" target="_blank" class="footer-social"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+      <a href="https://tiktok.com" target="_blank" class="footer-social"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>
+      <a href="https://wa.me/51987654321" target="_blank" class="footer-social"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
+      <a href="https://youtube.com" target="_blank" class="footer-social"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.4a2.78 2.78 0 0 0 1.95-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/></svg></a>
+    </div>
+  </div>
+  <div>
+    <h5>Servicios</h5>
+    <ul>
+      <li><a href="#">Limpieza dental</a></li>
+      <li><a href="#">Blanqueamiento</a></li>
+      <li><a href="#">Ortodoncia</a></li>
+      <li><a href="#">Implantes</a></li>
+      <li><a href="#">Estética dental</a></li>
+    </ul>
+  </div>
+  <div>
+    <h5>Clínica</h5>
+    <ul>
+      <li><a href="#">Sobre nosotros</a></li>
+      <li><a href="#">Nuestro equipo</a></li>
+      <li><a href="#">Blog dental</a></li>
+      <li><a href="#">Convenios</a></li>
+    </ul>
+  </div>
+  <div>
+    <h5>Horarios</h5>
+    <ul>
+      <li><a href="#">Lun–Vie: 8am–8pm</a></li>
+      <li><a href="#">Sábado: 8am–2pm</a></li>
+      <li><a href="#">Emergencias 24h</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span>© 2025 DentalLuz · Todos los derechos reservados</span>
+  <div class="footer-bottom-socials">
+    <a href="#">Política de privacidad</a>
+    <a href="#">Términos de uso</a>
+    <a href="#">Contacto</a>
+  </div>
+</div>
+
+<script>
+document.getElementById('submitBtn').addEventListener('click', function() {
+  const name = document.querySelector('input[type=text]').value;
+  if (name.trim()) {
+    this.textContent = '¡Cita solicitada! Te contactaremos pronto.';
+    this.style.background = '#2E8B6B';
+    this.disabled = true;
+  } else {
+    this.textContent = 'Ingresa tu nombre para continuar';
+    setTimeout(() => { this.textContent = 'Solicitar cita'; }, 2000);
+  }
+});
+
+// QR code
+window.addEventListener('load', function() {
+  try {
+    new QRCode(document.getElementById('qrcode'), {
+      text: 'https://www.dentalluz.pe',
+      width: 160,
+      height: 160,
+      colorDark: '#1A5C4A',
+      colorLight: '#FFFFFF',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  } catch(e) { console.log('QR error:', e); }
+});
+</script>
+</body>
+</html>
