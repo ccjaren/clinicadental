@@ -614,13 +614,13 @@ window.addEventListener('load', function() {
     
     try {
       new QRCode(qrContainer, {
-        text: 'https://www.dentalluz.pe',
-        width: 160, // Tamaño interno
-        height: 160,
-        colorDark: '#1A5C4A',
-        colorLight: '#FFFFFF',
-        correctLevel: QRCode.CorrectLevel.H
-      });
+  text: 'https://dentalluz.pe',
+  width: 220,
+  height: 220,
+  colorDark: '#1A5C4A',
+  colorLight: '#FFFFFF',
+  correctLevel: QRCode.CorrectLevel.L
+});
     } catch(e) { 
       console.log('QR error:', e); 
     }
