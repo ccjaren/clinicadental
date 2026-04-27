@@ -7,18 +7,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
-  #qrcode {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px auto;
-}
-
-#qrcode img,
-#qrcode canvas {
-  width: 220px !important;
-  height: 220px !important;
-}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --cream:#FAF8F3;--mint:#D4EDE4;--deep-teal:#1A5C4A;--mid-teal:#2E8B6B;
@@ -149,7 +137,20 @@ h2{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;color:v
 .qr-block{display:flex;flex-direction:column;align-items:center;gap:1.2rem;background:var(--cream);border-radius:1.5rem;padding:3rem;border:1px solid rgba(212,237,228,.6)}
 .qr-block h3{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:400;color:var(--deep-teal);text-align:center}
 #qrcode{background:var(--white);padding:12px;border-radius:.75rem;border:1px solid rgba(212,237,228,.9)}
-#qrcode canvas,#qrcode img{display:block!important}
+#qrcode{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+#qrcode canvas,
+#qrcode img{
+  width:160px !important;
+  height:160px !important;
+  max-width:160px;
+  max-height:160px;
+  display:block;
+}
 .qr-url{font-size:.78rem;color:var(--text-light);letter-spacing:.04em;text-align:center}
 .qr-label{font-size:.82rem;color:var(--text-mid);text-align:center;max-width:200px;line-height:1.5}
 
@@ -192,7 +193,6 @@ footer ul li a:hover{color:var(--white)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 .hero-text{animation:fadeUp .7s ease both}
 .hero-mosaic{animation:fadeUp .7s .15s ease both}
-  
 </style>
 </head>
 <body>
@@ -604,25 +604,16 @@ document.getElementById('submitBtn').addEventListener('click', function() {
 
 // QR code
 window.addEventListener('load', function() {
-  const qrContainer = document.getElementById('qrcode');
-  
-  if (qrContainer) {
-    // 1. Limpiamos el contenedor para evitar el "doble QR"
-    qrContainer.innerHTML = ""; 
-    
-    try {
-      new QRCode(qrContainer, {
-  text: 'https://dentalluz.pe',
-  width: 220,
-  height: 220,
-  colorDark: '#1A5C4A',
-  colorLight: '#FFFFFF',
-  correctLevel: QRCode.CorrectLevel.L
-});
-    } catch(e) { 
-      console.log('QR error:', e); 
-    }
-  }
+  try {
+    new QRCode(document.getElementById('qrcode'), {
+      text: 'https://www.dentalluz.pe',
+      width: 160,
+      height: 160,
+      colorDark: '#1A5C4A',
+      colorLight: '#FFFFFF',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  } catch(e) { console.log('QR error:', e); }
 });
 </script>
 </body>
