@@ -7,6 +7,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
+  #qrcode {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+}
+
+#qrcode img {
+  width: 160px !important;  /* Ajusta al mismo ancho del JS */
+  height: 160px !important; /* Ajusta al mismo alto del JS */
+  display: block;
+  object-fit: contain;      /* Evita distorsión visual */
+  border-radius: 8px;       /* Opcional: le da un toque más moderno */
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --cream:#FAF8F3;--mint:#D4EDE4;--deep-teal:#1A5C4A;--mid-teal:#2E8B6B;
